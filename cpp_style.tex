@@ -1,0 +1,359 @@
+\documentclass[footinclude=false,11pt,DIV11]{scrartcl}
+
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{upquote}
+\usepackage[absolute]{textpos} % Manual placement of certain things
+\usepackage{ragged2e} % Ragged-right columns with hyphenation
+\usepackage{nicefrac}
+\usepackage{macros}
+\usepackage[format=hang,font=small,labelfont=bf]{caption}
+\usepackage[expansion=false, babel=true]{microtype}
+\usepackage{subfig}
+\usepackage{ifthen}
+\usepackage{longtable}
+\usepackage{wrapfig}
+
+% Make sure that ligatures remain searchable in the PDF
+\input glyphtounicode
+\pdfgentounicode=1
+
+\IfFileExists{MinionPro.sty}
+   {\usepackage[opticals,fullfamily,lf]{MinionPro}}
+   {\usepackage{charter}\message{Package MinionPro.sty was not found. Reverting to
+charter.}}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\newcommand{\GuideVersion}{0.1.0}
+
+\typearea[current]{last}
+\raggedbottom
+\renewcommand*\ttdefault{txtt}
+
+\usepackage{scrpage2}
+\ofoot[]{}
+\cfoot[]{}
+\automark[subsection]{section}
+\ihead{\sc\leftmark}
+\ohead{\sc\rightmark}
+\chead{}
+\setheadsepline{.2pt}
+\setkomafont{pagenumber}{\normalfont}
+\addtokomafont{sectioning}{\color{myblue}\rmfamily}
+\addtokomafont{descriptionlabel}{\rmfamily}
+\pagestyle{scrheadings}
+
+\usepackage[
+	bookmarks,
+	bookmarksnumbered,
+	colorlinks,
+	plainpages=false,
+	pdfpagelabels,
+	hypertexnames=false,
+	linkcolor=myblue,
+	urlcolor=myblue,
+	citecolor=myblue,
+	pdfpagelabels,
+	pdftitle={C/C++ Style Guide, version \GuideVersion},
+	pdfauthor={Ioannis Gkioulekas},
+	pdfstartview=FitH
+]{hyperref}
+
+\definecolor{myblue}{rgb}{0,.1,.6}
+\definecolor{myred}{rgb}{0.63,.16,.16}
+\definecolor{lstshade}{gray}{0.95}
+\definecolor{lstframe}{gray}{0.80}
+\definecolor{lstcomment}{gray}{0.5}
+\definecolor{lstattrib}{rgb}{0,0.34,0}
+\definecolor{remark}{rgb}{1.0, 0.9, 0.9}
+\definecolor{remarkframe}{rgb}{1.0, 0.7, 0.7}
+
+% Listings settings
+\lstset{
+	basicstyle = \small\ttfamily\raggedright,
+	commentstyle=\color{lstcomment}\itshape,
+	stringstyle=\color{lstattrib},
+	mathescape = true,
+	frame = lrtb,
+	backgroundcolor = \color{lstshade},
+	rulecolor = \color{lstframe},
+	tabsize = 4,
+	columns = flexible,
+	keepspaces,
+	belowskip = \smallskipamount,
+	framerule = .7pt,
+	breaklines = true,
+	showstringspaces = false,
+	keywordstyle = \bfseries,
+	captionpos = b,
+	upquote = true
+}
+
+\lstdefinelanguage{xml} {
+	sensitive=true,
+	morecomment=[s][\color{lstcomment}\itshape]{<!--}{-->},
+	morecomment=[s][\color{lstcomment}]{<?}{?>},
+	string=[b]", stringstyle=\color{lstattrib},
+	keywords= [1] {
+		shape,bsdf,scene,texture,phase,integer,float,
+		string,transform,ref,rgb,srgb,spectrum,blackbody,
+		medium,film,sampler,integrator,emitter,sensor,
+		translate,rotate,scale,lookat,point,vector,matrix,
+		include,fscat,volume,alias,rfilter,boolean,
+		subsurface
+	},
+}
+
+
+% Set up textpos
+\TPGrid{68}{108}
+
+% Thick frames for images
+\setlength\fboxsep{0pt}
+\setlength\fboxrule{1.5pt}
+
+% Less vertical spacing for \figure[h] floats
+\setlength{\intextsep}{3pt}
+
+\lstnewenvironment{shell}[1][]{\lstset{#1}}
+	{}
+\lstnewenvironment{cpp}[1][]{\lstset{language=c++, #1}}
+	{}
+\lstnewenvironment{python}[1][]{\lstset{language=Python, #1}}
+	{}
+\lstnewenvironment{xml}[1][]{\lstset{language=xml, #1}}
+	{}
+\lstnewenvironment{console}[1][]{\lstset{basicstyle=\footnotesize\ttfamily, float, #1}}
+	{}
+
+\title{
+	C/C++ Style Guide\\
+	\LARGE Version \GuideVersion
+}
+\author{Ioannis Gkioulekas}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+
+%%-----------------------------------------------------------------------------------
+%% Introduction
+\section{Introduction}
+
+This guide documents the style conventions used in C/C++ libraries developed
+by the author. \emph{Style} in this case refers to both source file formatting and
+coding and design practices. These conventions are adopted with three objectives in
+mind: readability, maintainability, and safety.
+
+The adopted style conventions are strongly influenced by the Google C++ Style
+Guide~\cite{Google} and the styling conventions of the Mitsuba Physically-Based
+Renderer~\cite{Mitsuba}. With regards to the Google C++ Style Guide in particular, it
+is assumed that its conventions apply by default, unless explicitly contradicted by a
+convention described in this document. For this reason, the emphasis of this (evolving)
+guide is on places where it contradicts the Google C++ Style Guide. In addition to
+describing the adopted conventions, some effort has been put into also explaining the
+rationale behind their use.
+
+To help enforce consistency and application of its conventions, this guide is
+accompanied by an Eclipse CDT-importable template that partially implements it.
+Furthermore, given the large overlap with the Google C++ Style Guide,
+\code{cpplint}~\cite{cpplint} can be used to identify violations of this guide's
+conventions. Due to differences with the Google C++ Style Guide, it is recommended that
+you call \code{cpplint} with the following arguments,
+\begin{shell}
+./cpplint.py --filter=-whitespace/tab,-whitespace/labels,-whitespace/comments
+\end{shell}
+
+
+%%-----------------------------------------------------------------------------------
+%% Introduction
+\section{General practices}
+
+\paragraph{Enumerations:} Enumeration types should have a second to last \emph{length
+entry} that is set equal to the number of valid entries (without the length entry), and
+a last \emph{invalid entry} that is set equal to $-1$.
+
+and entries start with a capital
+\textbf{E} (\Etype). Variables that are of a type of an enum start with \textbf{e}
+(\etype). This is to enhance recognizability of these types and variables.
+
+\paragraph{Boost:} Boost libraries should be used whenever this helps to save time or
+write more compact code.
+
+
+%%-----------------------------------------------------------------------------------
+%% Formatting
+\section{Formatting}
+
+\paragraph{Indentation:} Indentation is done using tabs, which expand to \emph{four}
+spaces.
+
+\paragraph{Function declarations, definitions:} When wrapping a function's parameters
+to stay within the 80-character line limit, parameters are aligned at either exactly
+the column of the first function parameter when this can be achieved with only tabs; or
+largest number of tabs that are not to the right of the first function parameter.
+
+\paragraph{Function calls:} When wrapping a function's arguments to stay within the
+80-character line limit, arguments are aligned at either exactly the column of the
+first function arguments when this can be achieved with only tabs; or largest number of
+tabs that are not to the right of the first function arguments.
+
+\paragraph{Pointer and reference declarations:} The asterisk and ampersand are placed
+adjacent to the type.
+
+\paragraph{Class format:} The \code{public}, \code{protected}, and \code{private}
+keywords are at the same column as the \code{class} keyword.
+
+
+%%-----------------------------------------------------------------------------------
+%% Naming
+\section{Naming conventions}
+
+\paragraph{File names:} Header files end in \code{.h}, and C/C++ implementation files
+in \code{.cpp}.
+
+\paragraph{Name format:} Names are always written in camel-case, perhaps with the
+addition of a prefix consisting of lower-case characters followed by an underscore,
+and with the exception of macros. There are described in detail below.
+
+\paragraph{Rule priority:} TODO.
+% TODO: Derive and write rule priority.
+
+\paragraph{Classes and structures:} Classes and structures use camel-case
+starting with a capital letter.
+
+\paragraph{Type names:} Type names use camel-case starting with a capital letter.
+
+\paragraph{Variables:} Variables use camel-case starting with a lower-case letter.
+
+\paragraph{Functions:} Functions use camel-case starting with a lower-case letter.
+
+\paragraph{Macros:} Macros (which should be used scarcely) use all-capital letters
+with underscores for separating words.
+
+\paragraph{Enumerations:} Enumeration types and entries start with a capital
+\textbf{E} (\Etype). The length entry has the name of the corresponding enumeration
+type with the suffix \code{Length}, and the invalid entry has the name of the
+corresponding enumeration type with the suffix \code{Invalid}. Variables that are of a
+type of an enumeration start with \textbf{e} (\etype). This is to enhance
+recognizability of these types and variables.
+
+\paragraph{Constants:} Compile-time constants start with \textbf{k} (\ktype).
+
+\paragraph{Pointers:} Type names that are defined as pointers to some other type start
+with a capital \textbf{P} (\Ptype). Variables that are of type pointer to some
+type start with \textbf{p} (\ptype). This is to enhance recognizability of these types
+and variables. Note that a variable that is of a \Ptype type is not a \ptype variable.
+
+\paragraph{Attributes:} Attributes of classes and structs have the prefix \code{m\_}.
+This is to enhance recognizability, but also to facilitate maintenance, by making
+exploring the attributes of a class straightforward (e.g., type \code{m\_}, and
+auto-complete).
+
+\paragraph{Accessors and mutators:} Accessor (``getter'') and mutator (``setter'')
+member functions of a class are named by concatenating the prefix \code{get\_} and
+\code{set\_}, respectively, and the part of the name of the attribute they provide
+access to after its \code{m\_} prefix. This is to enhance recognizability, but also to
+facilitate maintenance, by making exploring functions that provide access to attributes
+of a class straightforward (e.g., type \code{get\_} or \code{set\_}, and
+auto-complete). In mutators, the parameter is named after the attribute it is assigned
+to, without the \code{m\_} prefix.
+
+\paragraph{Constructors:} In copy constructors, the parameter is named after the class
+with the first letter in lower-case. In other constructors, function parameters are
+named after the attributes they are assigned to, without the \code{m\_} prefix.
+
+\paragraph{Operators:} In assignment operators, the parameter is named after the class
+with the first letter in lower-case.
+% TODO: Derive and write rules for other operators.
+
+
+%%-----------------------------------------------------------------------------------
+%% Example
+\section{Example}
+
+Below is a comprehensive example demonstrating many of the above conventions.
+% TODO: Test that example compiles.
+\begin{cpp}
+#define NUM_DAYS_OF_YEAR 360
+
+typedef enum EMonth {
+	EJanuary = 0,
+	EFebrurary,
+	/* ... */
+	EDecember,
+	EMonthLength,
+	EMonthInvalid = -1
+} EMonth;
+
+const static int kNumOfDays = 30;
+
+struct Date {
+public:
+	int m_day;
+	EMonth m_eMonth;
+	int m_year;
+}
+
+bool isValidDate(const Date& query);
+
+typedef Date* PDate;
+
+class LogEntry {
+public:
+	LogEntry(const PDate& entryDate, 
+				const double* pEntryData)
+				: m_entryDate(entryDate),
+				  m_pEntryData(pEntryData) { }
+
+	LogEntry(const LogEntry& logEntry);
+
+	LogEntry& operator=(const LogEntry& logEntry);
+
+	inline const PDate& get_entryDate const {
+		return m_entryDate;
+	}
+
+	inline const double* get_pEntryData const {
+		return m_pEntryData;
+	}
+
+	inline void set_entryDate(const PDate& entryDate) {
+		m_entryDate = entryDate;
+	}
+
+	inline void set_pEntryData(const double* pEntryData) {
+		m_pEntryData = pEntryData;
+	}
+
+	void printLogEntry();
+
+private:
+	PDate m_entryDate;
+	double* m_pEntryData;
+};
+\end{cpp}
+
+
+%%-----------------------------------------------------------------------------------
+%% Bibliography
+\bibliographystyle{acm}
+\bibliography{cpp_style}
+
+\end{document}
