@@ -189,12 +189,11 @@ you call \code{cpplint} with the following arguments,
 entry} that is set equal to the number of valid entries (without the length entry), and
 a last \emph{invalid entry} that is set equal to $-1$.
 
-and entries start with a capital
-\textbf{E} (\Etype). Variables that are of a type of an enum start with \textbf{e}
-(\etype). This is to enhance recognizability of these types and variables.
-
 \paragraph{Boost:} Boost libraries should be used whenever this helps to save time or
 write more compact code.
+
+\paragraph{Argument order:} TODO.
+% TODO: Should I deviate from Google's style and list outputs first?.
 
 
 %%-----------------------------------------------------------------------------------
@@ -253,8 +252,14 @@ type with the suffix \code{Length}, and the invalid entry has the name of the
 corresponding enumeration type with the suffix \code{Invalid}. Variables that are of a
 type of an enumeration start with \textbf{e} (\etype). This is to enhance
 recognizability of these types and variables.
+% TODO: What about enums used as constants?
 
-\paragraph{Constants:} Compile-time constants start with \textbf{k} (\ktype).
+\paragraph{Bools:} Functions returning \code{bool} and variables of type \code{bool}
+start with \code{is} (\btype). This is to enhance recognizability of these variables
+and functions.
+
+\paragraph{Constants:} Compile-time constants start with \textbf{k} (\ktype). This is
+to enhance recognizability of these variables.
 
 \paragraph{Pointers:} Type names that are defined as pointers to some other type start
 with a capital \textbf{P} (\Ptype). Variables that are of type pointer to some
@@ -283,6 +288,9 @@ named after the attributes they are assigned to, without the \code{m\_} prefix.
 with the first letter in lower-case.
 % TODO: Derive and write rules for other operators.
 
+\paragraph{Static and const:} When a variable is declared both \code{static} and
+\code{const}, the \code{static} keyword should be the leftmost one.
+
 
 %%-----------------------------------------------------------------------------------
 %% Example
@@ -302,7 +310,7 @@ typedef enum EMonth {
 	EMonthInvalid = -1
 } EMonth;
 
-const static int kNumOfDays = 30;
+static const int kNumOfDays = 30;
 
 struct Date {
 public:
