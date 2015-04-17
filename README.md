@@ -1,203 +1,154 @@
+---
+layout: documentation
+---
+
 Introduction
 ============
 
-This guide documents the style conventions used in C/C++ repositories of [this account](https://github.com/igkiou/). *Style* in this case refers to both source file formatting and coding and design practices. These conventions are adopted with three objectives in mind: readability, maintainability, and safety.
+This guide documents the style conventions used in C/C++ repositories by @igkiou.
 
-The adopted style conventions are strongly influenced by the [Google C++ Style Guide](http://google-styleguide.googlecode.com/svn/trunk/cppguide.html) and the styling conventions of the [Mitsuba Physically-Based Renderer](http://www.mitsuba-renderer.org). With respect to the Google C++ Style Guide in particular, it is assumed that its conventions apply by default, unless explicitly contradicted by a convention described in this document. For this reason, the emphasis of this (evolving) guide is on places where it contradicts the Google C++ Style Guide. In addition to describing the adopted conventions, some effort has been put into also explaining the rationale behind their use.
+of [this account](https://github.com/igkiou/). *Style* in this case refers to both source file formatting and coding and design practices.
 
-To help enforce consistency and application of its conventions, this guide is accompanied by an Eclipse CDT-importable template that
-partially implements it. Furthermore, given the large overlap with the Google C++ Style Guide, [cpplint](http://google-styleguide.googlecode.com/svn/trunk/cpplint/) can be used to identify violations of this guide's conventions. Due to differences with the Google C++ Style Guide, it is recommended that you call `cpplint` with the following arguments,
+The adopted style conventions are strongly influenced by the [Google C++ Style Guide](http://google-styleguide.googlecode.com/svn/trunk/cppguide.html) and the styling conventions of the [Mitsuba Physically-Based Renderer](http://www.mitsuba-renderer.org). With respect to the Google C++ Style Guide in particular, it is by default assumed that it applies, unless explicitly contradicted by a convention described below. For this reason, the emphasis of this (evolving) guide is on differences the Google C++ Style Guide. In addition to describing the adopted conventions, some effort has been put into also explaining the rationale behind their use.
 
-`./cpplint.py –filter=-whitespace/tab,-whitespace/labels`
+To help enforce these conventions, the guide is accompanied by an Eclipse CDT-importable template that partially implements it. Furthermore, given the large overlap with the Google C++ Style Guide, [cpplint](http://google-styleguide.googlecode.com/svn/trunk/cpplint/) can be used to identify violations of this guide's conventions. Due to differences with the Google C++ Style Guide, it is recommended that `cpplint` be called with the following arguments,
+
+```bash
+./cpplint.py –filter=-whitespace/tab,-whitespace/labels
+``
 
 General practices
-=================
+-----------------
 
-#### Enumerations
+### Enumerations
 
-Enumeration types have a second to last *length entry* that is set equal
-to the number of valid entries (without the length entry), and a last
-*invalid entry* that is set equal to `-1`.
+Enumeration types have a second to last *length entry* that is set equal to the number of valid entries (without the length entry), and a last *invalid entry* that is set equal to `-1`.
 
-#### Scoped enumerations
+### Scoped enumerations
 
-Only scoped enums are used. The practice of using length and invalid
-entries (see previous) results in name collisions when unscoped enum are
-used.
+Only scoped enums are used. The practice of using length and invalid entries (see previous) results in name collisions when unscoped enum are used.
 
-#### Boost
+### Boost
 
-Boost libraries should be used whenever this helps save time or write
-more compact code.
+Boost libraries should be used whenever this helps save time or write more compact code.
 
-#### Detail namespaces
+### Detail namespaces
 
-When it is necessary to indicate that some names should not be used
-outside a header file, the corresponding definitions or declarations are
-placed inside a `detail` namespace. In most cases, they are instead
-placed in an implementation file inside an unnamed namespace, but a
-`detail` namespace may be necessary in some cases (e.g., in header-only
-implementations). Unnamed namespaces are not used in header files.
+When it is necessary to indicate that some names should not be used outside a header file, the corresponding definitions or declarations are placed inside a `detail` namespace. In most cases, they are instead placed in an implementation file inside an unnamed namespace, but a `detail` namespace may be necessary in some cases (e.g., in header-only implementations). Unnamed namespaces are not used in header files.
 
-#### Default and empty destructors
+### Default and empty destructors
 
-When it is necessary to provide a destructor, a destructor defaulted
-using `= default` is preferred to an empty destructor.
+When it is necessary to provide a destructor, a destructor defaulted using `= default` is preferred to an empty destructor.
 
-#### Rule priority
+### Rule priority
 
 TODO.
 
 Formatting
-==========
+----------
 
-#### Indentation
+### Indentation
 
-Indentation is done using tabs, which expand to *four* spaces. One
-“indent” is one tab.
+Indentation is done using tabs, which expand to *four* spaces. One "indent" is one tab.
 
-#### Block scopes
+### Block scopes
 
-When it is necessary to wrap a line starting a new block scope (e.g., a
-`for` statement), any subsequent lines have at least two additional
-indents relative to the first line. This is to distinguish them from the
-code block that will follow, which has only one additional indent.
+When it is necessary to wrap a line starting a new block scope (e.g., a `for` statement), any subsequent lines have at least two additional indents relative to the first line. This is to distinguish them from the code block that will follow, which has only one additional indent.
 
-#### Parameter and argument lists
+### Parameter and argument lists
 
-When it is necessary to wrap a function's parameters or arguments, they
-are wrapped at the maximum number of indents that is no more that one
-character to the right of the first character of the parameter or
-argument list. If this is impractical, they are wrapped at two
-additional indents.
+When it is necessary to wrap a function's parameters or arguments, they are wrapped at the maximum number of indents that is no more that one character to the right of the first character of the parameter or argument list. If this is impractical, they are wrapped at two additional indents.
 
-#### Initializer lists
+### Initializer lists
 
-When it is necessary to wrap initializer lists, they are formatted the
-same as parameter and argument lists. The colon `:` starting the
-initializer list should be in the same line as the end of the
-constructor parameter name.
+When it is necessary to wrap initializer lists, they are formatted the same as parameter and argument lists. The colon `:` starting the initializer list should be in the same line as the end of the constructor parameter name.
 
-#### Pointer and reference declarations
+### Pointer and reference declarations
 
 The asterisk and ampersand are placed adjacent to the type.
 
-#### Class format
+### Class format
 
-The `public`, `protected`, and `private` keywords are at the same column
-as the `class` keyword.
+The `public`, `protected`, and `private` keywords are at the same column as the `class` keyword.
 
 Naming conventions
-==================
+------------------
 
-#### File names
+### File names
 
 Header files end in `.h`, and C/C++ implementation files in `.cpp`.
 
-#### Name format
+### Name format
 
-Names are always written in camel-case, perhaps with the addition of a
-prefix consisting of lower-case characters followed by an underscore,
-and with the exception for macros. There are described in detail below.
+Names are always written in camel-case, perhaps with the addition of a prefix consisting of lower-case characters followed by an underscore, and with the exception for macros. There are described in detail below.
 
-#### Classes and structures
+### Classes and structures
 
-Classes and structures use camel-case starting with an upper-case
-letter.
+Classes and structures use camel-case starting with an upper-case letter.
 
-#### Type names
+### Type names
 
 Type names use camel-case starting with an upper-case letter.
 
-#### Variables
+### Variables
 
 Variables use camel-case starting with a lower-case letter.
 
-#### Functions
+### Functions
 
 Functions use camel-case starting with a lower-case letter.
 
-#### Macros
+### Macros
 
 Macros (which should be used scarcely) use upper-case letters with
 underscores separating words.
 
-#### Enumerations
+### Enumerations
 
-Enumeration types and entries start with an upper-case **E** (`E-type`).
-The length entry has the name `ELength`, and the invalid entry has the
-name `EInvalid`. Variables that are of a type of an enumeration start
-with **e** (`e-type`). This is to enhance recognizability of these types
-and variables.
+Enumeration types and entries start with an upper-case **E** (`E-type`). The length entry has the name `ELength`, and the invalid entry has the name `EInvalid`. Variables that are of a type of an enumeration start with **e** (`e-type`). This is to enhance recognizability of these types and variables.
 
-#### Bools
+### Bools
 
-Functions returning `bool` and variables of type `bool` start with `is`
-(`b-type`). This is to enhance recognizability of these variables and
-functions.
+Functions returning `bool` and variables of type `bool` start with `is` (`b-type`). This is to enhance recognizability of these variables and functions.
 
-#### Constants
+### Constants
 
-Compile-time constants start with **k** (`k-type`). This is to enhance
-recognizability of these variables.
+Compile-time constants start with **k** (`k-type`). This is to enhance recognizability of these variables.
 
-#### Pointers
+### Pointers
 
-Type names that are defined as pointers to some other type start with an
-upper-case **P** (`P-type`). Variables that are of type pointer to some
-type start with **p** (`p-type`). This is to enhance recognizability of
-these types and variables. Note that a variable that is of a
-`P-type`type is not a `p-type`variable.
+Type names that are defined as pointers to some other type start with an upper-case **P** (`P-type`). Variables that are of type pointer to some type start with **p** (`p-type`). This is to enhance recognizability of these types and variables. Note that a variable that is of a `P-type`type is not a `p-type`variable.
 
-#### Attributes
+### Attributes
 
-Attributes of classes and structs have the prefix `m_`. This is to
-enhance recognizability, but also to facilitate maintenance, by making
-exploring the attributes of a class straightforward (e.g., type `m_`,
-and auto-complete).
+Attributes of classes and structs have the prefix `m_`. This is to enhance recognizability, but also to facilitate maintenance, by making exploring the attributes of a class straightforward (e.g., type `m_`, and auto-complete).
 
-#### Accessors and mutators
+### Accessors and mutators
 
-Accessor (“getter”) and mutator (“setter”) member functions of a class
-are named by concatenating the prefix `get_` and `set_`, respectively,
-and the part of the name of the attribute they provide access to after
-its `m_` prefix. This is to enhance recognizability, but also to
-facilitate maintenance, by making exploring functions that provide
-access to attributes of a class straightforward (e.g., type `get_` or
-`set_`, and auto-complete). In mutators, the parameter is named after
-the attribute it is assigned to, without the `m_` prefix.
+Accessor ("getter") and mutator ("setter") member functions of a class are named by concatenating the prefix `get_` and `set_`, respectively, and the part of the name of the attribute they provide access to after its `m_` prefix. This is to enhance recognizability, but also to facilitate maintenance, by making exploring functions that provide access to attributes of a class straightforward (e.g., type `get_` or `set_`, and auto-complete). In mutators, the parameter is named after the attribute it is assigned to, without the `m_` prefix.
 
-#### Constructors
+### Constructors
 
-In copy and move constructors, the parameter is named `other`. This is
-to make facilitate reuse of standard forms of these constuctors (e.g.,
-copy-and-swap idiom) and refactoring. In other constructors, function
-parameters are named after the attributes they are assigned to, without
-the `m_` prefix.
+In copy and move constructors, the parameter is named `other`. This is to make facilitate reuse of standard forms of these constuctors (e.g., copy-and-swap idiom) and refactoring. In other constructors, function parameters are named after the attributes they are assigned to, without the `m_` prefix.
 
-#### Cope and move operators
+### Cope and move operators
 
 In copy and move operators, the parameter is named `other`.
 
-#### Swap and clone functions
+### Swap and clone functions
 
-When extending `swap`, the two parameters are named `first` and
-`second`. Functions with functionality analogous to `swap` have
-similarly named parameters. When defining functions with cloning or
-copying functionality (e.g., private implementations of copy
-constructors), the parameter that is cloned is named `other`.
+When extending `swap`, the two parameters are named `first` and `second`. Functions with functionality analogous to `swap` have similarly named parameters. When defining functions with cloning or copying functionality (e.g., private implementations of copy constructors), the parameter that is cloned is named `other`.
 
-#### Static and const
+### Static and const
 
-When a variable is declared both `static` and `const`, the `static`
-keyword is the leftmost one.
+When a variable is declared both `static` and `const`, the `static` keyword is the leftmost one.
 
 Example
-=======
+-------
 
 Below is an example demonstrating many of the above conventions.
 
-```
+```c++
 // Bad practice, used only for demonstration of macro naming convention.
 #define NUM_DAYS_OF_YEAR 360
 
