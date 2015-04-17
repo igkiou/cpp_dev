@@ -197,8 +197,7 @@ Example
 
 Below is an example demonstrating many of the above conventions.
 
-```
-// Bad practice, used only for demonstration of macro naming convention.
+```// Bad practice, used only for demonstration of macro naming convention.
 #define NUM_DAYS_OF_YEAR 360
 
 enum class EMonth {
@@ -257,5 +256,4 @@ private:
 	PDate m_entryDate;
 	double* m_pEntryData;
 	std::string m_entryText;
-};
-```
+};```
