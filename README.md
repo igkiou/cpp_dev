@@ -5,9 +5,7 @@ layout: documentation
 igkiou's C++ Style Guide
 ============
 
-This guide documents the style conventions used in C/C++ repositories by @igkiou.
-
-of [this account](https://github.com/igkiou/). *Style* in this case refers to both source file formatting and coding and design practices.
+This guide documents the style conventions used in C/C++ repositories by [@igkiou](https://github.com/igkiou). *Style* in this case refers to both source file formatting and coding and design practices.
 
 The adopted style conventions are strongly influenced by the [Google C++ Style Guide](http://google-styleguide.googlecode.com/svn/trunk/cppguide.html) and the styling conventions of the [Mitsuba Physically-Based Renderer](http://www.mitsuba-renderer.org). With respect to the Google C++ Style Guide in particular, it is by default assumed that it applies, unless explicitly contradicted by a convention described below. For this reason, the emphasis of this (evolving) guide is on differences the Google C++ Style Guide. In addition to describing the adopted conventions, some effort has been put into also explaining the rationale behind their use.
 
@@ -100,8 +98,7 @@ Functions use camel-case starting with a lower-case letter.
 
 ### Macros
 
-Macros (which should be used scarcely) use upper-case letters with
-underscores separating words.
+Macros (which should be used scarcely) use upper-case letters with underscores separating words.
 
 ### Enumerations
 
