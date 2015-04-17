@@ -2,7 +2,7 @@
 layout: documentation
 ---
 
-Introduction
+igkiou's C++ Style Guide
 ============
 
 This guide documents the style conventions used in C/C++ repositories by @igkiou.
@@ -13,7 +13,7 @@ The adopted style conventions are strongly influenced by the [Google C++ Style G
 
 To help enforce these conventions, the guide is accompanied by an Eclipse CDT-importable template that partially implements it. Furthermore, given the large overlap with the Google C++ Style Guide, [cpplint](http://google-styleguide.googlecode.com/svn/trunk/cpplint/) can be used to identify violations of this guide's conventions. Due to differences with the Google C++ Style Guide, it is recommended that `cpplint` be called with the following arguments,
 
-```bash
+```shell
 ./cpplint.py –filter=-whitespace/tab,-whitespace/labels
 ```
 
@@ -69,7 +69,7 @@ The asterisk and ampersand are placed adjacent to the type.
 
 ### Class format
 
-The `public`, `protected`, and `private` keywords are at the same column as the `class` keyword.
+The `public`, `protected`, and `private` keywords are at the same indentation level as the `class` keyword.
 
 Naming conventions
 ------------------
@@ -148,7 +148,7 @@ Example
 
 Below is an example demonstrating many of the above conventions.
 
-```c++
+```cpp
 // Bad practice, used only for demonstration of macro naming convention.
 #define NUM_DAYS_OF_YEAR 360
 
