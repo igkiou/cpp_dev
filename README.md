@@ -15,7 +15,7 @@ To help enforce these conventions, the guide is accompanied by an Eclipse CDT-im
 
 ```bash
 ./cpplint.py –filter=-whitespace/tab,-whitespace/labels
-``
+```
 
 General practices
 -----------------
