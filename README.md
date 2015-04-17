@@ -222,46 +222,65 @@ Example
 
 Below is an example demonstrating many of the above conventions.
 
+```
 // Bad practice, used only for demonstration of macro naming convention.
-\#define NUM~D~AYS~O~F~Y~EAR 360
+#define NUM_DAYS_OF_YEAR 360
 
-enum class EMonth <span> EJanuary = 0, EFebrurary, /\* ... \*/
-EDecember, ELength, EInvalid = -1 </span>;
+enum class EMonth {
+	EJanuary = 0,
+	EFebrurary,
+	/* ... */
+	EDecember,
+	ELength,
+	EInvalid = -1
+};
 
 static const int kNumOfDays = 30;
 
-struct Date <span> public: int m~d~ay; EMonth m~e~Month; int m~y~ear;
-</span>;
+struct Date {
+public:
+	int m_day;
+	EMonth m_eMonth;
+	int m_year;
+};
 
 bool isValidDate(const Date& query);
 
-typedef Date\* PDate;
+typedef Date* PDate;
 
-class LogEntry
+class LogEntry {
+public:
+	LogEntry(const PDate& entryDate, double* pEntryData, 
+			const std::string& entryText) :
+			m_entryDate(entryDate),
+			m_pEntryData(pEntryData),
+			m_entryText(entryText) {}
 
-public: LogEntry(const PDate& entryDate, double\* pEntryData, const
-std::string& entryText) : m~e~ntryDate(entryDate),
-m~p~EntryData(pEntryData), m~e~ntryText(entryText)
+	LogEntry(const LogEntry& other);
 
-LogEntry(const LogEntry& other);
+	LogEntry& operator=(const LogEntry& other);
 
-LogEntry& operator=(const LogEntry& other);
+	inline const PDate& get_entryDate() const {
+		return m_entryDate;
+	}
 
-inline const PDate& get~e~ntryDate() const <span> return m~e~ntryDate;
-</span>
+	inline const double* get_pEntryData() const {
+		return m_pEntryData;
+	}
 
-inline const double\* get~p~EntryData() const <span> return
-m~p~EntryData; </span>
+	inline void set_entryDate(const PDate& entryDate) {
+		m_entryDate = entryDate;
+	}
 
-inline void set~e~ntryDate(const PDate& entryDate) <span> m~e~ntryDate =
-entryDate; </span>
+	inline void set_pEntryData(double* pEntryData) {
+		m_pEntryData = pEntryData;
+	}
 
-inline void set~p~EntryData(double\* pEntryData) <span> m~p~EntryData =
-pEntryData; </span>
+	void printLogEntry() const;
 
-void printLogEntry() const;
-
-private: PDate m~e~ntryDate; double\* m~p~EntryData; std::string
-m~e~ntryText;
-
-;
+private:
+	PDate m_entryDate;
+	double* m_pEntryData;
+	std::string m_entryText;
+};
+```
