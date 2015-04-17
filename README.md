@@ -3,7 +3,7 @@ igkiou's C++ Style Guide
 
 This guide documents the style conventions used in C/C++ repositories by [@igkiou](https://github.com/igkiou). *Style* in this case refers to both source file formatting and coding and design practices.
 
-The adopted style conventions are strongly influenced by the [Google C++ Style Guide](http://google-styleguide.googlecode.com/svn/trunk/cppguide.html) and the styling conventions of the [Mitsuba Physically-Based Renderer](http://www.mitsuba-renderer.org). With respect to the Google C++ Style Guide in particular, it is by default assumed that it applies, unless explicitly contradicted by a convention described below. For this reason, the emphasis of this (evolving) guide is on differences the Google C++ Style Guide. In addition to describing the adopted conventions, some effort has been put into also explaining the rationale behind their use.
+The adopted style conventions are strongly influenced by the [Google C++ Style Guide](http://google-styleguide.googlecode.com/svn/trunk/cppguide.html) and the styling conventions of the [Mitsuba Physically-Based Renderer](http://www.mitsuba-renderer.org). With respect to the Google C++ Style Guide in particular, it is by default assumed that it applies, unless explicitly contradicted by a convention described below. For this reason, the emphasis of this (evolving) guide is on differences the Google C++ Style Guide. In addition to describing the adopted conventions, some effort has been put into also explaining the rationale behind them.
 
 To help enforce these conventions, the guide is accompanied by an Eclipse CDT-importable template that partially implements it. Furthermore, given the large overlap with the Google C++ Style Guide, [cpplint](http://google-styleguide.googlecode.com/svn/trunk/cpplint/) can be used to identify violations of this guide's conventions. Due to differences with the Google C++ Style Guide, it is recommended that `cpplint` be called with the following arguments,
 
@@ -98,11 +98,11 @@ Macros (which should be used scarcely) use upper-case letters with underscores s
 
 ### Enumerations
 
-Enumeration types and entries start with an upper-case **E** (`E-type`). The length entry has the name `ELength`, and the invalid entry has the name `EInvalid`. Variables that are of a type of an enumeration start with **e** (`e-type`). This is to enhance recognizability of these types and variables.
+Enumeration types and entries start with an upper-case **E** (`E-type`). The length entry has the name `ELength`, and the invalid entry has the name `EInvalid`. Variables that are of a type of an enumeration start with **e** (`e-type`). This is to make these types and variables easier to recognize.
 
 ### Bools
 
-Functions returning `bool` and variables of type `bool` start with `is` (`b-type`). This is to enhance recognizability of these variables and functions.
+Functions returning `bool` and variables of type `bool` have names corresponding to the binary (true/false) question their value answers. Most of the time, this means starting the name with `is` (`b-type`).
 
 ### Constants
 
