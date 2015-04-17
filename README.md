@@ -1,39 +1,14 @@
----
-authors:
-- Ioannis Gkioulekas
-title: |
-     C/C++ Style Guide\
-    Version 0.1.0
-...
-
 Introduction
 ============
 
-This guide documents the style conventions used in C/C++ libraries
-developed by the author. *Style* in this case refers to both source file
-formatting and coding and design practices. These conventions are
-adopted with three objectives in mind: readability, maintainability, and
-safety.
+This guide documents the style conventions used in C/C++ repositories of [this account](https://github.com/igkiou/). *Style* in this case refers to both source file formatting and coding and design practices. These conventions are adopted with three objectives in mind: readability, maintainability, and safety.
 
-The adopted style conventions are strongly influenced by the Google C++
-Style Guide @Google and the styling conventions of the Mitsuba
-Physically-Based Renderer @Mitsuba. With regards to the Google C++ Style
-Guide in particular, it is assumed that its conventions apply by
-default, unless explicitly contradicted by a convention described in
-this document. For this reason, the emphasis of this (evolving) guide is
-on places where it contradicts the Google C++ Style Guide. In addition
-to describing the adopted conventions, some effort has been put into
-also explaining the rationale behind their use.
+The adopted style conventions are strongly influenced by the [Google C++ Style Guide](http://google-styleguide.googlecode.com/svn/trunk/cppguide.html) and the styling conventions of the [Mitsuba Physically-Based Renderer](http://www.mitsuba-renderer.org). With respect to the Google C++ Style Guide in particular, it is assumed that its conventions apply by default, unless explicitly contradicted by a convention described in this document. For this reason, the emphasis of this (evolving) guide is on places where it contradicts the Google C++ Style Guide. In addition to describing the adopted conventions, some effort has been put into also explaining the rationale behind their use.
 
-To help enforce consistency and application of its conventions, this
-guide is accompanied by an Eclipse CDT-importable template that
-partially implements it. Furthermore, given the large overlap with the
-Google C++ Style Guide, `cpplint` @cpplint can be used to identify
-violations of this guide’s conventions. Due to differences with the
-Google C++ Style Guide, it is recommended that you call `cpplint` with
-the following arguments,
+To help enforce consistency and application of its conventions, this guide is accompanied by an Eclipse CDT-importable template that
+partially implements it. Furthermore, given the large overlap with the Google C++ Style Guide, [cpplint](http://google-styleguide.googlecode.com/svn/trunk/cpplint/) can be used to identify violations of this guide's conventions. Due to differences with the Google C++ Style Guide, it is recommended that you call `cpplint` with the following arguments,
 
-./cpplint.py –filter=-whitespace/tab,-whitespace/labels
+`./cpplint.py –filter=-whitespace/tab,-whitespace/labels`
 
 General practices
 =================
@@ -90,7 +65,7 @@ code block that will follow, which has only one additional indent.
 
 #### Parameter and argument lists:
 
-When it is necessary to wrap a function’s parameters or arguments, they
+When it is necessary to wrap a function's parameters or arguments, they
 are wrapped at the maximum number of indents that is no more that one
 character to the right of the first character of the parameter or
 argument list. If this is impractical, they are wrapped at two
