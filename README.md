@@ -1,7 +1,3 @@
----
-layout: documentation
----
-
 igkiou's C++ Style Guide
 ============
 
