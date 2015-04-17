@@ -80,7 +80,7 @@ Header files end in `.h`, and C/C++ implementation files in `.cpp`.
 
 ### Name format
 
-Names are always written in camel-case, perhaps with the addition of a prefix consisting of lower-case characters followed by an underscore, and with the exception for macros. There are described in detail below.
+Names are always written in camel-case, sometimes with the addition of a prefix consisting of lower-case characters followed by an underscore, and with the exception for macros. These are described in detail below.
 
 ### Classes and structures
 
